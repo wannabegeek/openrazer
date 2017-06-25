@@ -152,6 +152,10 @@ static ssize_t razer_attr_read_device_type(struct device *dev, struct device_att
         device_type = "Razer Ouroboros\n";
         break;
 
+    case USB_DEVICE_ID_RAZER_OUROBOROS_WIRELESS:
+        device_type = "Razer Ouroboros (Wireless)\n";
+        break;
+
     case USB_DEVICE_ID_RAZER_OROCHI_2011:
         device_type = "Razer Orochi 2011\n";
         break;
@@ -1075,8 +1079,13 @@ static ssize_t razer_attr_read_scroll_led_brightness(struct device *dev, struct 
     struct usb_device *usb_dev = interface_to_usbdev(intf);
     struct razer_report report = razer_chroma_standard_get_led_brightness(VARSTORE, SCROLL_WHEEL_LED);
     struct razer_report response = {0};
+    unsigned char brightness_index = 0x02;
 
     switch(usb_dev->descriptor.idProduct) {
+    case USB_DEVICE_ID_RAZER_OUROBOROS_WIRELESS:
+        report = razer_chroma_misc_get_dock_brightness();
+        brightness_index = 0x00;
+        break;
     case USB_DEVICE_ID_RAZER_NAGA_HEX_V2:
         report = razer_chroma_standard_get_led_brightness(VARSTORE, SCROLL_WHEEL_LED);
         report.transaction_id.id = 0x3F;
@@ -1093,7 +1102,7 @@ static ssize_t razer_attr_read_scroll_led_brightness(struct device *dev, struct 
 
     response = razer_send_payload(usb_dev, &report);
 
-    return sprintf(buf, "%d\n", response.arguments[2]);
+    return sprintf(buf, "%d\n", response.arguments[brightness_index]);
 }
 
 /**
@@ -1107,6 +1116,10 @@ static ssize_t razer_attr_write_scroll_led_brightness(struct device *dev, struct
     struct razer_report report = {0};
 
     switch(usb_dev->descriptor.idProduct) {
+    case USB_DEVICE_ID_RAZER_OUROBOROS_WIRELESS:
+        report = razer_chroma_misc_set_dock_brightness(brightness);
+        break;
+
     case USB_DEVICE_ID_RAZER_NAGA_HEX_V2:
         report = razer_chroma_standard_set_led_brightness(VARSTORE, SCROLL_WHEEL_LED, brightness);
         report.transaction_id.id = 0x3F;
@@ -2070,6 +2083,7 @@ static int razer_mouse_probe(struct hid_device *hdev, const struct hid_device_id
             CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_dpi);
             break;
 
+        case USB_DEVICE_ID_RAZER_OUROBOROS_WIRELESS:
         case USB_DEVICE_ID_RAZER_OUROBOROS:
             CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_dpi);
             CREATE_DEVICE_FILE(&hdev->dev, &dev_attr_charge_low_threshold);
@@ -2331,6 +2345,7 @@ static void razer_mouse_disconnect(struct hid_device *hdev)
             device_remove_file(&hdev->dev, &dev_attr_dpi);
             break;
 
+        case USB_DEVICE_ID_RAZER_OUROBOROS_WIRELESS:
         case USB_DEVICE_ID_RAZER_OUROBOROS:
             device_remove_file(&hdev->dev, &dev_attr_dpi);
             device_remove_file(&hdev->dev, &dev_attr_charge_low_threshold);
@@ -2449,6 +2464,7 @@ static const struct hid_device_id razer_devices[] = {
     { HID_USB_DEVICE(USB_VENDOR_ID_RAZER,USB_DEVICE_ID_RAZER_TAIPAN) },
     { HID_USB_DEVICE(USB_VENDOR_ID_RAZER,USB_DEVICE_ID_RAZER_IMPERATOR) },
     { HID_USB_DEVICE(USB_VENDOR_ID_RAZER,USB_DEVICE_ID_RAZER_OUROBOROS) },
+    { HID_USB_DEVICE(USB_VENDOR_ID_RAZER,USB_DEVICE_ID_RAZER_OUROBOROS_WIRELESS) },
     { HID_USB_DEVICE(USB_VENDOR_ID_RAZER,USB_DEVICE_ID_RAZER_DEATHADDER_2013) },
     { HID_USB_DEVICE(USB_VENDOR_ID_RAZER,USB_DEVICE_ID_RAZER_OROCHI_2013) },
     { HID_USB_DEVICE(USB_VENDOR_ID_RAZER,USB_DEVICE_ID_RAZER_OROCHI_CHROMA) },
