@@ -393,6 +393,26 @@ class RazerDevice(DBusService):
                     else:
                         self.logger.error("%s: Couldn't detect effect argument count!", self.__class__.__name__)
 
+    def set_persistence(self, zone, key, value):
+        """
+        Set a device's current state for persisting across sessions.
+
+        :param zone: Zone
+        :type zone: string
+
+        :param key: Key
+        :type key: string
+
+        :param value: Value
+        :type value: string
+        """
+        self.persistence.status["changed"] = True
+
+        if zone:
+            self.zone[zone][key] = value
+        else:
+            self.zone[key] = value
+
     def get_current_effect(self):
         """
         Get the device's current effect

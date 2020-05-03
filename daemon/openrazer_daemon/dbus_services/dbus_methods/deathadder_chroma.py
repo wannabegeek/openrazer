@@ -25,7 +25,7 @@ def set_backlight_active(self, active):
     self.logger.debug("DBus call set_backlight_active")
 
     # remember status
-    self.zone["backlight"]["active"] = bool(active)
+    self.set_persistence("backlight", "active", bool(active))
 
     driver_path = self.get_driver_path('backlight_led_state')
 
@@ -60,7 +60,7 @@ def set_logo_active(self, active):
     self.logger.debug("DBus call set_logo_active")
 
     # remember status
-    self.zone["logo"]["active"] = bool(active)
+    self.set_persistence("logo", "active", bool(active))
 
     driver_path = self.get_driver_path('logo_led_state')
 
@@ -103,7 +103,7 @@ def set_logo_brightness(self, brightness):
     elif brightness < 0:
         brightness = 0
 
-    self.zone["logo"]["brightness"] = brightness
+    self.set_persistence("logo", "brightness", brightness)
 
     brightness = int(round(brightness * (255.0 / 100.0)))
 
@@ -134,7 +134,7 @@ def set_logo_static(self, red, green, blue):
     self.send_effect_event('setStatic', red, green, blue)
 
     # remember effect
-    self.zone["logo"]["effect"] = 'static'
+    self.set_persistence("logo", "effect", 'static')
     self.zone["logo"]["colors"][0:3] = int(red), int(green), int(blue)
 
     rgb_driver_path = self.get_driver_path('logo_led_rgb')
@@ -167,7 +167,7 @@ def set_logo_blinking(self, red, green, blue):
     self.send_effect_event('setLogoBlinking', red, green, blue)
 
     # remember effect
-    self.zone["logo"]["effect"] = 'blinking'
+    self.set_persistence("logo", "effect", 'blinking')
     self.zone["logo"]["colors"][0:3] = int(red), int(green), int(blue)
 
     rgb_driver_path = self.get_driver_path('logo_led_rgb')
@@ -200,7 +200,7 @@ def set_logo_pulsate(self, red, green, blue):
     self.send_effect_event('setPulsate', red, green, blue)
 
     # remember effect
-    self.zone["logo"]["effect"] = 'pulsate'
+    self.set_persistence("logo", "effect", 'pulsate')
     self.zone["logo"]["colors"][0:3] = int(red), int(green), int(blue)
 
     rgb_driver_path = self.get_driver_path('logo_led_rgb')
@@ -233,7 +233,7 @@ def set_logo_spectrum(self):
     self.send_effect_event('setSpectrum')
 
     # remember effect
-    self.zone["logo"]["effect"] = 'spectrum'
+    self.set_persistence("logo", "effect", 'spectrum')
 
     effect_driver_path = self.get_driver_path('logo_led_effect')
 
@@ -265,7 +265,7 @@ def set_scroll_active(self, active):
     self.logger.debug("DBus call set_scroll_active")
 
     # remember status
-    self.zone["scroll"]["active"] = bool(active)
+    self.set_persistence("scroll", "active", bool(active))
 
     driver_path = self.get_driver_path('scroll_led_state')
 
@@ -308,7 +308,7 @@ def set_scroll_brightness(self, brightness):
     elif brightness < 0:
         brightness = 0
 
-    self.zone["scroll"]["brightness"] = brightness
+    self.set_persistence("scroll", "brightness", brightness)
 
     brightness = int(round(brightness * (255.0 / 100.0)))
 
@@ -339,7 +339,7 @@ def set_scroll_static(self, red, green, blue):
     self.send_effect_event('setStatic', red, green, blue)
 
     # remember effect
-    self.zone["scroll"]["effect"] = 'static'
+    self.set_persistence("scroll", "effect", 'static')
     self.zone["scroll"]["colors"][0:3] = int(red), int(green), int(blue)
 
     rgb_driver_path = self.get_driver_path('scroll_led_rgb')
@@ -372,7 +372,7 @@ def set_scroll_blinking(self, red, green, blue):
     self.send_effect_event('setPulsate', red, green, blue)
 
     # remember effect
-    self.zone["scroll"]["effect"] = 'blinking'
+    self.set_persistence("scroll", "effect", 'blinking')
     self.zone["scroll"]["colors"][0:3] = int(red), int(green), int(blue)
 
     rgb_driver_path = self.get_driver_path('scroll_led_rgb')
@@ -405,7 +405,7 @@ def set_scroll_pulsate(self, red, green, blue):
     self.send_effect_event('setPulsate', red, green, blue)
 
     # remember effect
-    self.zone["scroll"]["effect"] = 'pulsate'
+    self.set_persistence("scroll", "effect", 'pulsate')
     self.zone["scroll"]["colors"][0:3] = int(red), int(green), int(blue)
 
     rgb_driver_path = self.get_driver_path('scroll_led_rgb')
@@ -429,7 +429,7 @@ def set_scroll_spectrum(self):
     self.send_effect_event('setSpectrum')
 
     # remember effect
-    self.zone["scroll"]["effect"] = 'spectrum'
+    self.set_persistence("scroll", "effect", 'spectrum')
 
     effect_driver_path = self.get_driver_path('scroll_led_effect')
 

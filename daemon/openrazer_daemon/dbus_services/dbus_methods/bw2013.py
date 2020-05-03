@@ -14,7 +14,7 @@ def bw_set_pulsate(self):
     driver_path = self.get_driver_path('matrix_effect_pulsate')
 
     # remember effect
-    self.zone["backlight"]["effect"] = 'pulsate'
+    self.set_persistence("backlight", "effect", 'pulsate')
 
     with open(driver_path, 'w') as driver_file:
         driver_file.write('1')
@@ -33,7 +33,7 @@ def bw_set_static(self):
     driver_path = self.get_driver_path('matrix_effect_static')
 
     # remember effect
-    self.zone["backlight"]["effect"] = 'static'
+    self.set_persistence("backlight", "effect", 'static')
 
     with open(driver_path, 'w') as driver_file:
         driver_file.write('1')

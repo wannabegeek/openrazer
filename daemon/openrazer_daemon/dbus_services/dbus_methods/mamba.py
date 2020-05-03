@@ -143,6 +143,9 @@ def set_dpi_xy(self, dpi_x, dpi_y):
     self.dpi[0] = dpi_x
     self.dpi[1] = dpi_y
 
+    self.set_persistence(None, "dpi_x", dpi_x)
+    self.set_persistence(None, "dpi_y", dpi_y)
+
     # constrain DPI to maximum
     if hasattr(self, 'DPI_MAX'):
         if self.dpi[0] > self.DPI_MAX:

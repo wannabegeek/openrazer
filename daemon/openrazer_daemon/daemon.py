@@ -29,6 +29,7 @@ import openrazer_daemon.hardware
 from openrazer_daemon.dbus_services.service import DBusService
 from openrazer_daemon.device import DeviceCollection
 from openrazer_daemon.misc.screensaver_monitor import ScreensaverMonitor
+from openrazer_daemon.misc.autosave_persistence import PersistenceAutoSave
 
 
 class RazerDaemon(DBusService):
@@ -83,6 +84,7 @@ class RazerDaemon(DBusService):
 
         self._persistence_file = persistence_file
         self._persistence = configparser.ConfigParser()
+        self._persistence.status = {"changed": False}
         self.read_persistence(persistence_file)
 
         # Logging
@@ -136,6 +138,8 @@ class RazerDaemon(DBusService):
 
         self._collecting_udev = False
         self._collecting_udev_devices = []
+
+        self._init_autosave_persistence()
 
         # TODO remove
         self.sync_effects(self._config.getboolean('Startup', 'sync_effects_enabled'))
@@ -210,6 +214,16 @@ class RazerDaemon(DBusService):
             self._screensaver_monitor.monitoring = self._config.getboolean('Startup', 'devices_off_on_screensaver')
         except dbus.exceptions.DBusException as e:
             self.logger.error("Failed to init ScreensaverMonitor: {}".format(e))
+
+    def _init_autosave_persistence(self):
+        if not self._persistence:
+            self.logger.debug("Persistence unspecified. Will not create auto save thread")
+            return
+
+        self._autosave_persistence = PersistenceAutoSave(self._persistence, self._persistence_file, self._persistence.status, self.logger, 10, self.write_persistence)
+        self._autosave_persistence.thread = threading.Thread(target=self._autosave_persistence.watch)
+        self._autosave_persistence.thread.daemon = True
+        self._autosave_persistence.thread.start()
 
     def _init_signals(self):
         """
@@ -300,7 +314,7 @@ class RazerDaemon(DBusService):
         if not persistence_file:
             return
 
-        self.logger.debug('Updating persistence config')
+        self.logger.debug('Writing persistence config')
 
         for device in self._razer_devices:
             self._persistence[device.dbus.storage_name] = {}
