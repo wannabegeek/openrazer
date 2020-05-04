@@ -698,7 +698,7 @@ class SingleLed(BaseRazerFX):
         :return: Effect name ("static", "spectrum", etc.)
         :rtype: str
         """
-        return self._getattr('get#Effect')
+        return str(self._getattr('get#Effect')())
 
     @property
     def colors(self) -> bytearray:
@@ -708,7 +708,7 @@ class SingleLed(BaseRazerFX):
         :return: Effect colors (an array of 9 bytes, for 3 colors in RGB format)
         :rtype: bytearray
         """
-        return bytes(self._getattr('get#EffectColors'))
+        return bytes(self._getattr('get#EffectColors')())
 
     @property
     def speed(self) -> int:
@@ -718,7 +718,7 @@ class SingleLed(BaseRazerFX):
         :return: Effect speed (a value between 0 and 3)
         :rtype: int
         """
-        return self._getattr('get#EffectSpeed')
+        return int(self._getattr('get#EffectSpeed')())
 
     @property
     def wave_dir(self) -> int:
@@ -728,7 +728,7 @@ class SingleLed(BaseRazerFX):
         :return: Wave direction (WAVE_LEFT or WAVE_RIGHT)
         :rtype: int
         """
-        return self._getattr('get#WaveDir')
+        return int(self._getattr('get#WaveDir')())
 
     @property
     def brightness(self):
