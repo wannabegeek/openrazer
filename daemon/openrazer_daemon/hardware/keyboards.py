@@ -338,6 +338,25 @@ class RazerBlackWidowUltimate2013(_MacroKeyboard):
     DEVICE_IMAGE = "https://assets.razerzone.com/eeimages/support/products/245/438_blackwidow_ultimate_2014.png"
 
 
+class RazerBlackWidowTournamentEdition2014(_MacroKeyboard):
+    """
+    Class for the Razer BlackWidow Tournament Edition 2014
+    """
+    EVENT_FILE_REGEX = re.compile(r'.*Razer_Razer_BlackWidow_Tournament_Edition(-if01)?-event-kbd')
+
+    USB_VID = 0x1532
+    USB_PID = 0x011C
+    METHODS = ['get_device_type_keyboard', 'get_game_mode', 'set_game_mode', 'set_macro_mode', 'get_macro_mode',
+               'get_macro_effect', 'set_macro_effect', 'bw_get_effect', 'bw_set_pulsate', 'bw_set_static', 'get_macros', 'delete_macro', 'add_macro']
+
+    DEVICE_IMAGE = "https://d4kkpd69xt9l7.cloudfront.net/sys-master/images/hba/h1d/8823290003486"
+
+    # Deprecated - RAZER_URLS be removed in future.
+    RAZER_URLS = {
+        "top_img": DEVICE_IMAGE
+    }
+
+
 class RazerBlackWidowChroma(_RippleKeyboard):
     """
     Class for the Razer BlackWidow Chroma
