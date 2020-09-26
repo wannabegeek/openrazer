@@ -187,7 +187,7 @@ class RazerKraken71V2(__RazerDevice):
         if self.suspend_args['effect'] == "breathDual":
             self.suspend_args['args'] = self.zone["backlight"]["colors"][0:6]
         elif self.suspend_args['effect'] == "breathTriple":
-            self.suspend_args['args'] = self.zone["backlight"]["colors"]
+            self.suspend_args['args'] = self.zone["backlight"]["colors"][0:9]
         else:
             self.suspend_args['args'] = self.zone["backlight"]["colors"][0:3]
 

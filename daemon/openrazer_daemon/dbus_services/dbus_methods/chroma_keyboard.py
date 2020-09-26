@@ -436,7 +436,7 @@ def set_breath_triple_effect(self, red1, green1, blue1, red2, green2, blue2, red
 
     # remember effect
     self.set_persistence("backlight", "effect", 'breathTriple')
-    self.zone["backlight"]["colors"] = int(red1), int(green1), int(blue1), int(red2), int(green2), int(blue2), int(red3), int(green3), int(blue3)
+    self.zone["backlight"]["colors"][0:9] = int(red1), int(green1), int(blue1), int(red2), int(green2), int(blue2), int(red3), int(green3), int(blue3)
 
     driver_path = self.get_driver_path('matrix_effect_breath')
 
