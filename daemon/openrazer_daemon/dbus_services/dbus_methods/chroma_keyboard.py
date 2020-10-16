@@ -397,6 +397,46 @@ def set_breath_single_effect(self, red, green, blue):
         driver_file.write(payload)
 
 
+@endpoint('razer.device.lighting.chroma', 'setBreathDual', in_sig='yyyyyy')
+def set_breath_dual_effect(self, red1, green1, blue1, red2, green2, blue2):
+    """
+    Set the device to triple colour breathing effect
+
+    :param red1: Red component
+    :type red1: int
+
+    :param green1: Green component
+    :type green1: int
+
+    :param blue1: Blue component
+    :type blue1: int
+
+    :param red2: Red component
+    :type red2: int
+
+    :param green2: Green component
+    :type green2: int
+
+    :param blue2: Blue component
+    :type blue2: int
+    """
+    self.logger.debug("DBus call set_breath_triple_effect")
+
+    # Notify others
+    self.send_effect_event('setBreathDual', red1, green1, blue1, red2, green2, blue2)
+
+    # remember effect
+    self.set_persistence("backlight", "effect", 'breathDual')
+    self.zone["backlight"]["colors"][0:6] = int(red1), int(green1), int(blue1), int(red2), int(green2), int(blue2)
+
+    driver_path = self.get_driver_path('matrix_effect_breath')
+
+    payload = bytes([red1, green1, blue1, red2, green2, blue2])
+
+    with open(driver_path, 'wb') as driver_file:
+        driver_file.write(payload)
+
+
 @endpoint('razer.device.lighting.chroma', 'setBreathTriple', in_sig='yyyyyyyyy')
 def set_breath_triple_effect(self, red1, green1, blue1, red2, green2, blue2, red3, green3, blue3):
     """
@@ -441,46 +481,6 @@ def set_breath_triple_effect(self, red1, green1, blue1, red2, green2, blue2, red
     driver_path = self.get_driver_path('matrix_effect_breath')
 
     payload = bytes([red1, green1, blue1, red2, green2, blue2, red3, green3, blue3])
-
-    with open(driver_path, 'wb') as driver_file:
-        driver_file.write(payload)
-
-
-@endpoint('razer.device.lighting.chroma', 'setBreathDual', in_sig='yyyyyy')
-def set_breath_dual_effect(self, red1, green1, blue1, red2, green2, blue2):
-    """
-    Set the device to dual colour breathing effect
-
-    :param red1: Red component
-    :type red1: int
-
-    :param green1: Green component
-    :type green1: int
-
-    :param blue1: Blue component
-    :type blue1: int
-
-    :param red2: Red component
-    :type red2: int
-
-    :param green2: Green component
-    :type green2: int
-
-    :param blue2: Blue component
-    :type blue2: int
-    """
-    self.logger.debug("DBus call set_breath_dual_effect")
-
-    # Notify others
-    self.send_effect_event('setBreathDual', red1, green1, blue1, red2, green2, blue2)
-
-    # remember effect
-    self.set_persistence("backlight", "effect", 'breathDual')
-    self.zone["backlight"]["colors"][0:6] = int(red1), int(green1), int(blue1), int(red2), int(green2), int(blue2)
-
-    driver_path = self.get_driver_path('matrix_effect_breath')
-
-    payload = bytes([red1, green1, blue1, red2, green2, blue2])
 
     with open(driver_path, 'wb') as driver_file:
         driver_file.write(payload)

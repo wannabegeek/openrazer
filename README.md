@@ -58,6 +58,10 @@ The below devices are fully feature supported by OpenRazer which means all avail
 | Razer Blade Stealth (Late 2019)               |  1532:024A  |
 | Razer Blade Pro (Late 2019)                   |  1532:024C  |
 | Razer Blade 15 Studio Edition (2019)          |  1532:024D  |
+| Razer Blade Stealth (Early 2020)              |  1532:0252  |
+| Razer Blade 15 Advanced (2020)                |  1532:0253  |
+| Razer Blade 15 (Early 2020) Base              |  1532:0255  |
+| Razer Cynosa V2                               |  1532:025E  |
 
 ### Mice
 | Device                                        | USB VID:PID |
@@ -84,6 +88,7 @@ The below devices are fully feature supported by OpenRazer which means all avail
 | Razer Mamba Tournament Edition                |  1532:0046  |
 | Razer Orochi (Wired)                          |  1532:0048  |
 | Razer Diamondback Chroma                      |  1532:004C  |
+| Razer DeathAdder 2000                         |  1532:004F  |
 | Razer Naga Hex V2                             |  1532:0050  |
 | Razer Naga Chroma                             |  1532:0053  |
 | Razer DeathAdder 3500                         |  1532:0054  |
@@ -93,6 +98,7 @@ The below devices are fully feature supported by OpenRazer which means all avail
 | Razer DeathAdder Elite                        |  1532:005C  |
 | Razer Abyssus 2000                            |  1532:005E  |
 | Razer Lancehead Tournament Edition            |  1532:0060  |
+| Razer Atheris (Receiver)                      |  1532:0062  |
 | Razer Basilisk                                |  1532:0064  |
 | Razer Naga Trinity                            |  1532:0067  |
 | Razer Abyssus Elite (D.Va Edition)            |  1532:006A  |
@@ -107,7 +113,9 @@ The below devices are fully feature supported by OpenRazer which means all avail
 | Razer Viper                                   |  1532:0078  |
 | Razer Viper Ultimate (Wired)                  |  1532:007A  |
 | Razer Viper Ultimate (Wireless)               |  1532:007B  |
+| Razer Basilisk X HyperSpeed                   |  1532:0083  |
 | Razer DeathAdder V2                           |  1532:0084  |
+| Razer Viper Mini                              |  1532:008A  |
 
 ### Mousemats
 | Device                                        | USB VID:PID |
@@ -125,6 +133,7 @@ The below devices are fully feature supported by OpenRazer which means all avail
 | Razer Kraken 7.1                              |  1532:0506  |
 | Razer Kraken 7.1 V2                           |  1532:0510  |
 | Razer Kraken Ultimate                         |  1532:0527  |
+| Razer Kraken Kitty Edition                    |  1532:0F19  |
 
 ### Misc
 | Device                                        | USB VID:PID |
