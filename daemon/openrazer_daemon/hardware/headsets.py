@@ -230,8 +230,8 @@ class RazerKrakenUltimate(__RazerDevice):
     USB_PID = 0x0527
     METHODS = ['get_device_type_headset',
                'set_static_effect', 'set_spectrum_effect', 'set_none_effect', 'set_breath_single_effect',
-               'set_breath_dual_effect', 'set_breath_triple_effect', 'get_current_effect_kraken',
-               'get_static_effect_args_kraken', 'get_breath_effect_args_kraken', 'set_custom_kraken']
+               'set_breath_dual_effect', 'set_breath_triple_effect',
+               'get_static_effect_args_kraken', 'set_custom_kraken']
 
     DEVICE_IMAGE = "https://assets.razerzone.com/eeimages/support/products/1603/rzr_kraken_ultimate_render01_2019_resized.png"
 
@@ -261,23 +261,13 @@ class RazerKrakenUltimate(__RazerDevice):
         """
         self.suspend_args.clear()
 
-        current_effect = _dbus_kraken.get_current_effect_kraken(self)
-        dec = self.decode_bitfield(current_effect)
-
-        if dec['breathing1']:
-            self.suspend_args['effect'] = 'breathing1'
-            self.suspend_args['args'] = _dbus_kraken.get_breath_effect_args_kraken(self)
-        elif dec['breathing2']:
-            self.suspend_args['effect'] = 'breathing2'
-            self.suspend_args['args'] = _dbus_kraken.get_breath_effect_args_kraken(self)
-        elif dec['breathing3']:
-            self.suspend_args['effect'] = 'breathing3'
-            self.suspend_args['args'] = _dbus_kraken.get_breath_effect_args_kraken(self)
-        elif dec['spectrum']:
-            self.suspend_args['effect'] = 'spectrum'
-        elif dec['state']:
-            self.suspend_args['effect'] = 'static'
-            self.suspend_args['args'] = _dbus_kraken.get_static_effect_args_kraken(self)
+        self.suspend_args['effect'] = self.zone["backlight"]["effect"]
+        if self.suspend_args['effect'] == "breathDual":
+            self.suspend_args['args'] = self.zone["backlight"]["colors"][0:6]
+        elif self.suspend_args['effect'] == "breathTriple":
+            self.suspend_args['args'] = self.zone["backlight"]["colors"][0:9]
+        else:
+            self.suspend_args['args'] = self.zone["backlight"]["colors"][0:3]
 
         self.disable_notify = True
         _dbus_chroma.set_none_effect(self)
@@ -298,11 +288,11 @@ class RazerKrakenUltimate(__RazerDevice):
             _dbus_chroma.set_spectrum_effect(self)
         elif effect == 'static':
             _dbus_chroma.set_static_effect(self, *args)
-        elif effect == 'breathing1':
+        elif effect == 'breathSingle':
             _dbus_chroma.set_breath_single_effect(self, *args)
-        elif effect == 'breathing2':
+        elif effect == 'breathDual':
             _dbus_chroma.set_breath_dual_effect(self, *args)
-        elif effect == 'breathing3':
+        elif effect == 'breathTriple':
             _dbus_chroma.set_breath_triple_effect(self, *args)
 
         self.disable_notify = False
