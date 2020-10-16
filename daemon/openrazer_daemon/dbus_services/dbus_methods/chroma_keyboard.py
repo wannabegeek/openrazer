@@ -400,7 +400,7 @@ def set_breath_single_effect(self, red, green, blue):
 @endpoint('razer.device.lighting.chroma', 'setBreathDual', in_sig='yyyyyy')
 def set_breath_dual_effect(self, red1, green1, blue1, red2, green2, blue2):
     """
-    Set the device to triple colour breathing effect
+    Set the device to dual colour breathing effect
 
     :param red1: Red component
     :type red1: int
@@ -420,7 +420,7 @@ def set_breath_dual_effect(self, red1, green1, blue1, red2, green2, blue2):
     :param blue2: Blue component
     :type blue2: int
     """
-    self.logger.debug("DBus call set_breath_triple_effect")
+    self.logger.debug("DBus call set_breath_dual_effect")
 
     # Notify others
     self.send_effect_event('setBreathDual', red1, green1, blue1, red2, green2, blue2)
