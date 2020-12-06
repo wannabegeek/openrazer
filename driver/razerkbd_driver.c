@@ -567,6 +567,10 @@ static ssize_t razer_attr_read_device_type(struct device *dev, struct device_att
         device_type = "Razer Cynosa V2\n";
         break;
 
+    case USB_DEVICE_ID_RAZER_BLACKWIDOW_V3_TENKEYLESS:
+        device_type = "Razer BlackWidow V3 Tenkeyless\n";
+        break;
+
     default:
         device_type = "Unknown Device\n";
     }
@@ -598,6 +602,7 @@ static ssize_t razer_attr_write_mode_macro_effect(struct device *dev, struct dev
     case USB_DEVICE_ID_RAZER_BLACKWIDOW_ESSENTIAL:
     case USB_DEVICE_ID_RAZER_CYNOSA_CHROMA:
     case USB_DEVICE_ID_RAZER_CYNOSA_LITE:
+    case USB_DEVICE_ID_RAZER_BLACKWIDOW_V3_TENKEYLESS:
         report = razer_chroma_standard_set_led_effect(NOSTORE, MACRO_LED, enabled);
         report.transaction_id.id = 0x3F;
         break;
