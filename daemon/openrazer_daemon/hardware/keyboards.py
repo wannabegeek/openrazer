@@ -805,7 +805,7 @@ class RazerBlackWidow2019(_RippleKeyboard):
 
     DEVICE_IMAGE = "https://assets.razerzone.com/eeimages/support/products/1501/1501-blackwidow2019.png"
 
-class RazerBlackWidowV2Tenkeyless(_RippleKeyboard):
+class RazerBlackWidowV3Tenkeyless(_RippleKeyboard):
     """
     Class for the Razer BlackWidow V3 Tenkeyless
     """
